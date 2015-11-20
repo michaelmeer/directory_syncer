@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    
+    <title>RasPi Directory Syncer</title>
+    
+    <!-- Enter a brief description of your page -->
+    <meta name="description" content="RasPi Directory Syncer">
+    
+    <!-- Define a viewport to mobile devices to use - telling the browser to assume that the page is as wide as the device (width=device-width) and setting the initial page zoom level to be 1 (initial-scale=1.0) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Add normalize.css which enables browsers to render all elements more consistently and in line with modern standards as it only targets particular styles that need normalizing -->
+    <link href="css/normalize.css" rel="stylesheet" media="all">
+    <!-- For legacy support (IE 6/7, Firefox < 4, and Safari < 5) use normalize-legacy.css instead -->
+    <!--<link href="css/normalize-legacy.css" rel="stylesheet" media="all">-->
+    
+    <!-- Include the site stylesheet -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">    
+</head>
+<body>
+
+    <!-- The page header typically contains items such as your site heading, logo and possibly the main site navigation -->
+    <!-- ARIA: the landmark role "banner" is set as it is the prime heading or internal title of the page --> 
+    <header role="banner">
+        <h1>RasPi Directory Syncer</h1>
+    </header>
+    
+    <!-- If you want to use an element as a wrapper, i.e. for styling only, then <div> is still the element to use -->
+    <div class="wrap">
+        <main role="main">    
+            <section>
+                <h3>Last sync run</h3>
+                <pre>
+                File 1 transferred
+                File 2 transferred
+                File 3 error!
+                File 3 transferred
+                </pre>                    
+            </section>
+            <section>
+                <h3>Actions</h3>
+				<form method="post" action="/voting.php">
+				<p> 
+				<input type="button" value="Start another sync run">
+				</p>
+				</form>                   
+            </section>            
+        </main>
+    </div>
+    
+    <footer>
+        <small>Copyright &copy; <time datetime="2015">{{timestamp}}</time></small>        
+    </footer>
+    
+</body>
+</html>
