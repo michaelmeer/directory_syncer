@@ -1,0 +1,35 @@
+<html>
+  <meta charset="utf-8" /> 
+  <head>
+    <title>Flask + Celery Examples</title>
+    <style>
+        .log_box {
+            width: 100%;
+            text-align: left;
+            background-color: GhostWhite;
+            line-height: 5px;
+            border-style: solid;
+    		border-width: 1px;
+    		padding: 10px;
+        }
+    </style>
+  </head>
+  <body>
+    <h1>Flask + Celery Examples</h1>
+    <h2>Add some content</h2>
+    <h2>Some other stuff</h2>
+    <button id="start-bg-job">Add some content below</button>
+    <pre id='rsync_log_box' class="log_box"></pre>
+    <footer>Finished</footer>
+    <script>
+	    document.querySelector('button').onclick = function() {
+	    		// create a couple of elements in an otherwise empty HTML page
+	         var line = document.createElement("p");
+	         var line_text = document.createTextNode("Big Head!!");
+	         line.appendChild(line_text);
+	         var rsync_log_box = document.getElementById("rsync_log_box");
+	         rsync_log_box.appendChild(line);
+	    }	    
+    </script>
+  </body>
+</html>
