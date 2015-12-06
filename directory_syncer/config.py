@@ -9,7 +9,9 @@ class BaseConfig(object):
     LOGGING_LOCATION = 'directory_syncer.log'
     LOGGING_LEVEL = logging.DEBUG
     RSYNC_COMMAND = "rsync a b"
-
+    # Celery configuration
+    CELERY_BROKER_URL = 'redis://localhost:6379/0'
+    CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 
 
 def configure_app(app):

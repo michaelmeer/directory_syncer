@@ -1,21 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    
+    <meta charset="utf-8">    
     <title>RasPi Directory Syncer</title>
-    
     <!-- Enter a brief description of your page -->
     <meta name="description" content="RasPi Directory Syncer">
-    
-    <!-- Define a viewport to mobile devices to use - telling the browser to assume that the page is as wide as the device (width=device-width) and setting the initial page zoom level to be 1 (initial-scale=1.0) -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Add normalize.css which enables browsers to render all elements more consistently and in line with modern standards as it only targets particular styles that need normalizing -->
-    <link href="css/normalize.css" rel="stylesheet" media="all">
-    <!-- For legacy support (IE 6/7, Firefox < 4, and Safari < 5) use normalize-legacy.css instead -->
-    <!--<link href="css/normalize-legacy.css" rel="stylesheet" media="all">-->
-    
     <!-- Include the site stylesheet -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">    
 </head>
@@ -32,7 +21,7 @@
         <main role="main">    
             <section>
                 <h3>Last sync run</h3>
-                <pre>
+                <pre id="progress">
                 File 1 transferred
                 File 2 transferred
                 File 3 error!
@@ -41,11 +30,9 @@
             </section>
             <section>
                 <h3>Actions</h3>
-				<form method="post" action="/voting.php">
-				<p> 
-				<input type="button" value="Start another sync run">
-				</p>
-				</form>                   
+				<p>
+				<button id="start-bg-job">Start another sync run</button>
+				</p>                   
             </section>            
         </main>
     </div>
@@ -53,6 +40,45 @@
     <footer>
         <small>Copyright &copy; <time datetime="2015">{{timestamp}}</time></small>        
     </footer>
+    <script>
+        function start_long_task() {
+            // add task status elements
+
+            // send ajax POST request to start background job
+            $.ajax({
+                type: 'POST',
+                url: '/longtask',
+                success: function(data, status, request) {
+                    status_url = request.getResponseHeader('Location');
+                    update_progress(status_url);
+                },
+                error: function() {
+                    alert('Unexpected error');
+                }
+            });
+        }
+        function update_progress(status_url) {
+            // send GET request to status URL
+            $.getJSON(status_url, function(data) {
+                // create a couple of elements in an otherwise empty HTML page
+		        var line = document.createElement("p");
+		        var line_text = document.createTextNode("Big Head!!");
+		        line.appendChild(line_text);
+		        var rsync_log_box = document.getElementById("rsync_log_box");
+		        rsync_log_box.appendChild(line);
+	         
+                // rerun in 2 seconds
+                setTimeout(function() {
+                    update_progress(status_url);
+                }, 2000);
+                
+            });
+        }
+        document.querySelector('button').onclick = function() {
+            //$('#start-bg-job').click(start_long_task);
+            start_long_task()
+        };
+    </script>
     
 </body>
 </html>
