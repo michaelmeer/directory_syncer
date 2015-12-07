@@ -21,12 +21,7 @@
         <main role="main">    
             <section>
                 <h3>Last sync run</h3>
-                <pre id="progress">
-                File 1 transferred
-                File 2 transferred
-                File 3 error!
-                File 3 transferred
-                </pre>                    
+                <pre id="rsync_log_box" class="log_box"></pre>                    
             </section>
             <section>
                 <h3>Actions</h3>
@@ -40,6 +35,7 @@
     <footer>
         <small>Copyright &copy; <time datetime="2015">{{timestamp}}</time></small>        
     </footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script>
         function start_long_task() {
             // add task status elements
@@ -61,11 +57,9 @@
             // send GET request to status URL
             $.getJSON(status_url, function(data) {
                 // create a couple of elements in an otherwise empty HTML page
-		        var line = document.createElement("p");
-		        var line_text = document.createTextNode("Big Head!!");
-		        line.appendChild(line_text);
+		        var line_text = document.createTextNode("Big Head!!"+"\n");
 		        var rsync_log_box = document.getElementById("rsync_log_box");
-		        rsync_log_box.appendChild(line);
+		        rsync_log_box.appendChild(line_text);
 	         
                 // rerun in 2 seconds
                 setTimeout(function() {
